@@ -1,0 +1,91 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - 'src/Medium.Client/**'
+    - 'src/Medium.Domain/**'
+pr:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - 'src/Medium.Client/**'
+    - 'src/Medium.Domain/**'
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+# Update LD_LIBRARY_PATH for GitVersion
+- bash: |
+    shopt -s nullglob
+    function join_by { local IFS="$1"; shift; echo "$*"; }
+    lib_path=$(join_by ';' $(Agent.WorkFolder)/_tasks/GitVersion*/4.0.*/lib/linux/x86_64)
+    echo LD_LIBRARY_PATH: $lib_path
+    echo "##vso[task.setvariable variable=LD_LIBRARY_PATH]$lib_path"
+  displayName: Update LD_LIBRARY_PATH for GitVersion
+  
+- task: gitversion/setup@0
+  displayName: gitversion setup
+  inputs:
+    versionSpec: '5.x'
+
+- task: gitversion/execute@0
+  displayName: gitversion execute
+
+- task: DotNetCoreCLI@2
+  displayName: restore
+  inputs:
+    command: 'restore'
+    projects: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  displayName: build
+  inputs:
+    command: build
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration) /p:Version=$(GitVersion.SemVer)'
+
+- task: DotNetCoreCLI@2
+  displayName: test
+  inputs:
+    command: test
+    projects: '**/*test/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: CopyFiles@2
+  displayName: 'copy generated nugets'
+  inputs:
+    Contents: '**/*$(GitVersion.SemVer).nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    OverWrite: true
+    flattenFolders: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
+  condition: always()
+
+- task: NuGetCommand@2
+  displayName: publish nuget (internal)
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*$(GitVersion.SemVer).nupkg'
+    publishVstsFeed: 'martinstm'
+  
+- task: NuGetCommand@2
+  displayName: publish nuget (NuGet.org)
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*$(GitVersion.SemVer).nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'NuGet.org'
+      

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>dotnet-Medium.Demos.WorkerService-2E5A6AE1-568C-49F1-9AD1-592EEF978389</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Medium.Client" Version="0.2.0-PullRequest0076.24" />-->
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Medium.Client\Medium.Client.csproj" />
+    <ProjectReference Include="..\..\src\Medium.Domain\Medium.Domain.csproj" />
+  </ItemGroup>
+</Project>
