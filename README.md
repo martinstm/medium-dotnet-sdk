@@ -30,9 +30,9 @@ Once you have the API Key from Rapid API, you just need to add it in the followi
 }
 ```
 
-## How to user it?
+## How to use it?
 
-In your class you have 2 options to use the Medium client functionalities.
+In your class, you have 2 options to use the Medium client functionalities.
 
 - Option 1 (using the main IMediumClient interface)
 
