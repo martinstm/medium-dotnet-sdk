@@ -1,5 +1,3 @@
-[![Build Status](https://dev.azure.com/martinstm/Medium/_apis/build/status%2FSDK%2FMedium%20SDK?branchName=refs%2Fpull%2F79%2Fmerge)](https://dev.azure.com/martinstm/Medium/_build/latest?definitionId=18&branchName=refs%2Fpull%2F79%2Fmerge)
-
 # Unofficial Medium API .NET SDK
 
 This SDK was developed based on [Unofficial Medium API](https://mediumapi.com/). 
