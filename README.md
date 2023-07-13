@@ -1,3 +1,8 @@
+[![NuGet](https://img.shields.io/badge/NuGet-blue?logo=NuGet)](https://www.nuget.org/packages/Medium.Client) 
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=data%5B0%5D.version&url=https%3A%2F%2Fazuresearch-usnc.nuget.org%2Fquery%3Fq%3Dpackageid%3Amedium.client)
+![Downloads](https://img.shields.io/badge/dynamic/json?label=Downloads&query=data%5B0%5D.totalDownloads&url=https%3A%2F%2Fazuresearch-usnc.nuget.org%2Fquery%3Fq%3Dpackageid%3Amedium.client)
+
+
 # Unofficial Medium API .NET SDK
 
 This SDK was developed based on [Unofficial Medium API](https://mediumapi.com/). 
