@@ -6,7 +6,6 @@ This SDK was developed based on [Unofficial Medium API](https://mediumapi.com/).
 
 Install the package from NuGet.org [Medium.Client](https://www.nuget.org/packages/Medium.Client/).
 
-
 ## Assumptions
 
 You need to have a Rapid API account and subscribe to the Medium API. 
@@ -28,6 +27,22 @@ Once you have the API Key from Rapid API, you just need to add it in the followi
         "ApiKey": "your-key"
     }
 }
+```
+
+## Supported API endpoints
+
+[API Reference](https://docs.mediumapi.com/)
+
+All the existing endpoints are supported by this SDK. 
+There are some additional features to simplify the API calls. For example, the API provides an endpoint to get the user info based on the user identifier. This SDK has an additional method to get this info but is based on a username. This avoids having 2 method calls. However, in reality, the SDK will make that 2 API calls.
+
+```csharp
+// 2 method calls
+var userId = await _mediumClient.Users.GetIdByUsernameAsync("username");
+var userInfo = await _mediumClient.Users.GetInfoByIdAsync(userId);
+
+// 1 method call
+var userInfo2 = await _mediumClient.Users.GetInfoByUsernameAsync("username");
 ```
 
 ## How to use it?

@@ -31,7 +31,7 @@ namespace Medium.Client.DependencyResolver
                 c.BaseAddress = new Uri("https://medium2.p.rapidapi.com/");
                 c.DefaultRequestHeaders.Add("X-RapidAPI-Key", options.Apikey);
                 c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "medium2.p.rapidapi.com");
-                c.DefaultRequestHeaders.Add("Origin-SDK", "medium-dotnet-sdk");
+                c.DefaultRequestHeaders.Add("User-Agent", "medium-api-dotnet-sdk");
             });
 
             services.AddScoped<IUserClient, UserClient>();
