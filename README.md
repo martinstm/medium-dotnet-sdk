@@ -7,6 +7,14 @@
 
 This SDK was developed based on [Unofficial Medium API](https://mediumapi.com/). 
 
+### Presentation Video
+
+[![Watch the video](https://img.youtube.com/vi/gBCho5itKDI/hqdefault.jpg)](https://www.youtube.com/embed/gBCho5itKDI)
+
+### Demonstration Video
+
+[![Watch the video](https://img.youtube.com/vi/jAWJFdFEqVQ/hqdefault.jpg)](https://www.youtube.com/embed/jAWJFdFEqVQ)
+
 ## Installation
 
 Install the package from NuGet.org [Medium.Client](https://www.nuget.org/packages/Medium.Client/).
