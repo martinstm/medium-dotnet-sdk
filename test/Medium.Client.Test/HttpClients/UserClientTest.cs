@@ -204,7 +204,7 @@ namespace Medium.Client.Test.HttpClients
 
             var result = await usersClient.GetFollowersByUserIdAsync("test-id");
 
-            result.Should().BeEquivalentTo(MockUserIdsResponse());
+            result.Should().BeEquivalentTo(MockUserFollowersResponse());
         }
 
         [Fact]
@@ -220,7 +220,7 @@ namespace Medium.Client.Test.HttpClients
 
             var result = await usersClient.GetFollowersByUserIdAsync("test-id", 1);
 
-            result.Should().BeEquivalentTo(MockUserIdsResponse());
+            result.Should().BeEquivalentTo(MockUserFollowersResponse());
         }
 
         [Fact]
@@ -236,6 +236,21 @@ namespace Medium.Client.Test.HttpClients
 
             var action = async () => await usersClient.GetFollowersByUserIdAsync("test-id", 1700);
             await action.Should().ThrowAsync<InvalidParameterException>();
+        }
+
+        [Fact]
+        public async Task GetFollowersByUserIdAsync_WithAllQueryParameters_SuccessAsync()
+        {
+            var httpResponse = new HttpResponseMessage
+            {
+                Content = MockValidUserFollowers_WithOneElement_Response()
+            };
+
+            var httpMessageHandlerMock = MockHelper.CreateHttpMessageHandler(httpResponse);
+            UserClient usersClient = new UserClient(MockHelper.CreateBaseHttpClient(httpMessageHandlerMock));
+
+            var result = await usersClient.GetFollowersByUserIdAsync("test-id", 20, "after-page-id");
+            result.Should().BeEquivalentTo(MockUserFollowersResponse());
         }
 
         [Fact]
@@ -380,7 +395,11 @@ namespace Medium.Client.Test.HttpClients
         {
             return JsonContent.Create(new
             {
-                followers = new List<string> { "user-1", "user-2" }
+                followers = new List<string> { "user-1", "user-2" },
+                id = "user_id",
+                count = 10,
+                next = "next_page_id",
+                total_followers = 150
             });
         }
 
@@ -396,7 +415,11 @@ namespace Medium.Client.Test.HttpClients
         {
             return JsonContent.Create(new
             {
-                followers = new List<string> { "user-1", "user-2" }
+                followers = new List<string> { "user-1", "user-2" },
+                id = "user_id",
+                count = 10,
+                next = "next_page_id",
+                total_followers = 150
             });
         }
 
@@ -444,12 +467,26 @@ namespace Medium.Client.Test.HttpClients
                 Publications = new List<string> { "my-publication-1", "my-publication-2" }
             };
         }
-
         private List<string> MockUserIdsResponse()
         {
             return new List<string>
             {
                 "user-1", "user-2"
+            };
+        }
+
+        private UserFollowers MockUserFollowersResponse()
+        {
+            return new UserFollowers
+            {
+                Followers = new List<string>
+                {
+                    "user-1", "user-2"
+                },
+                UserId = "user_id",
+                Count = 10,
+                NextPage = "next_page_id",
+                TotalFollowers = 150
             };
         }
     }

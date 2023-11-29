@@ -15,15 +15,15 @@ namespace Medium.Demos.ConsoleApp
             IHost host = Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddMediumClient(true);
+                    services.AddMediumClient(defaultRetryPolicy: true);
                 })
                 .Build();
 
             IMediumClient mediumClient = host.Services.GetRequiredService<IMediumClient>();
 
-            UserInfo user = await mediumClient.Users.GetInfoByIdAsync("");
+            UserInfo userInfo = await mediumClient.Users.GetInfoByUsernameAsync("martinstm");
 
-            Console.WriteLine($"Current User: {user.Fullname} - {user.Username}");
+            Console.WriteLine($"User {userInfo.Fullname} with {userInfo.FollowersCount} followers found!");
         }
     }
 }

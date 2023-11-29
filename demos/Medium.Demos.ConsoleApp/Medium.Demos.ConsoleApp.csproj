@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Medium.Client" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Medium.Client\Medium.Client.csproj" />
-    <ProjectReference Include="..\..\src\Medium.Domain\Medium.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

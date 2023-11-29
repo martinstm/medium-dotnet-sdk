@@ -93,11 +93,29 @@ public class MyService
 }
 ```
 
+## How to use the default retry policy?
+
+```
+services.AddMediumClient(defaultRetryPolicy: true);
+```
+
+Retry Policy definition: Handle transient HTTP errors and NotFound status code. There will be 5 retries with a decorrelated  Jitter backoff. 
+
+## How to use a custom retry policy?
+
+```
+services.AddMediumClient()
+    .WithRetryPolicy(m =>
+    {
+        // your retry logic here
+    });
+```
+
+
 ## Roadmap :airplane:
 
 - Add in memory mock client implementation to simplify the development. With this, we can try the SDK without having Rapid API access.
-
-- Add retry policy.
+- .NET 8 upgrade
 
 
 ## Give me a star if you like it :star:
