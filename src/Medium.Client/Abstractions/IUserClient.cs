@@ -71,8 +71,9 @@ namespace Medium.Client.Abstractions
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="count">Number of results. Max value 1500.</param>
+        /// <param name="after">Page id of results.</param>
         /// <returns></returns>
-        Task<IEnumerable<string>> GetFollowersByUserIdAsync(string userId, int? count = null);
+        Task<UserFollowers> GetFollowersByUserIdAsync(string userId, int? count = 25, string after = null);
 
         /// <summary>
         /// Gets a list of user identifiers that the user is following.

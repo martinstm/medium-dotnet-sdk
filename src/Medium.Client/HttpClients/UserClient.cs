@@ -1,5 +1,7 @@
 ﻿using Medium.Client.Abstractions;
 using Medium.Client.Exceptions;
+using Medium.Client.Models;
+using Medium.Client.Utils;
 using Medium.Domain.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -69,23 +71,27 @@ namespace Medium.Client.HttpClients
             return result;
         }
 
-        public async Task<IEnumerable<string>> GetFollowersByUserIdAsync(string userId, int? count = null)
+        public async Task<UserFollowers> GetFollowersByUserIdAsync(string userId, int? count = null, string after = null)
         {
-            if (count > 1500)
-                throw new InvalidParameterException($"The parameter '{nameof(count)}' can't be greater than 1500.");
+            if (count > Constants.MAX_COUNT)
+                throw new InvalidParameterException($"The parameter '{nameof(count)}' can't be greater than {Constants.MAX_COUNT}.");
 
-            var queryParam = string.Empty;
-            if(count.HasValue)
-                queryParam = $"?count={count}";
+            var parameters = new Dictionary<string, string>
+            {
+                { "count", string.IsNullOrEmpty(count.ToString()) ? null : count.ToString() },
+                { "after", after }
+            };
+            
+            var queryParams = QueryParameterBuilder.BuildQueryString(parameters);
 
-            var result = await _baseHttpClient.GetAsync<IEnumerable<string>>($"{_basePath}/{userId}/followers{queryParam}", "followers");
+            var result = await _baseHttpClient.GetAsync<UserFollowers>($"{_basePath}/{userId}/followers{queryParams}");
             return result;
         }
 
         public async Task<IEnumerable<string>> GetFollowingByUserIdAsync(string userId, int? count = null)
         {
-            if (count > 1500)
-                throw new InvalidParameterException($"The parameter '{nameof(count)}' can't be greater than 1500.");
+            if (count > Constants.MAX_COUNT_HIGHER)
+                throw new InvalidParameterException($"The parameter '{nameof(count)}' can't be greater than {Constants.MAX_COUNT_HIGHER}.");
 
             var queryParam = string.Empty;
             if (count.HasValue)

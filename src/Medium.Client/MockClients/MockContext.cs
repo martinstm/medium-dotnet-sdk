@@ -2,11 +2,11 @@
 
 namespace Medium.Client.MockClients
 {
-    internal class Context
+    internal class MockContext
     {
         public UserInfo User { get; }
 
-        public Context()
+        public MockContext()
         {
             User = GetUser();
         }

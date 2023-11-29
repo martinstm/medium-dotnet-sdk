@@ -7,11 +7,11 @@ namespace Medium.Client.Test.MockClients
 {
     public class MockUserClientTest
     {
-        private readonly Context _context;
+        private readonly MockContext _context;
 
         public MockUserClientTest()
         {
-            _context = new Context();
+            _context = new MockContext();
         }
 
         [Fact]

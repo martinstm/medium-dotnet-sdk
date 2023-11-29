@@ -8,9 +8,9 @@ namespace Medium.Client.MockClients
 {
     internal class MockUserClient : IUserClient
     {
-        private readonly Context _context;
+        private readonly MockContext _context;
 
-        public MockUserClient(Context context)
+        public MockUserClient(MockContext context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace Medium.Client.MockClients
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<string>> GetFollowersByUserIdAsync(string userId, int? count = null)
+        public Task<UserFollowers> GetFollowersByUserIdAsync(string userId, int? count = null, string after = null)
         {
             throw new NotImplementedException();
         }
