@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Medium.Client.HttpClients;
 using Medium.Domain.Article;
-using Medium.Domain.User;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -125,6 +124,38 @@ namespace Medium.Client.Test.HttpClients
             result.Should().BeEquivalentTo(new List<string>() { "related-post-id" });
         }
 
+        [Fact]
+        public async Task GetAssetsAsync_SuccessAsync()
+        {
+            var httpResponse = new HttpResponseMessage
+            {
+                Content = MockValidArticleAssetsResponse()
+            };
+
+            var httpMessageHandlerMock = MockHelper.CreateHttpMessageHandler(httpResponse);
+            ArticleClient articleClient = new ArticleClient(MockHelper.CreateBaseHttpClient(httpMessageHandlerMock));
+
+            var result = await articleClient.GetAssetsAsync("article-id");
+
+            result.Should().BeEquivalentTo(MockArticleAssetsResponse());
+        }
+
+        [Fact]
+        public async Task GetRecommendedAsync_SuccessAsync()
+        {
+            var httpResponse = new HttpResponseMessage
+            {
+                Content = MockValidRecommendedResponse()
+            };
+
+            var httpMessageHandlerMock = MockHelper.CreateHttpMessageHandler(httpResponse);
+            ArticleClient articleClient = new ArticleClient(MockHelper.CreateBaseHttpClient(httpMessageHandlerMock));
+
+            var result = await articleClient.GetRecommendedAsync("article-id");
+
+            result.Should().BeEquivalentTo(new List<string>() { "recommended-post-id" });
+        }
+
         private ArticleInfo MockArticleResponse()
         {
             return new ArticleInfo
@@ -145,7 +176,12 @@ namespace Medium.Client.Test.HttpClients
                 Topics = new List<string>() { "topic1", "topic2" },
                 Url = "article_url",
                 Voters = 7,
-                WordCount = 350
+                WordCount = 350,
+                IsLocked = true,
+                IsSeries = false,
+                IsShortForm = false,
+                UniqueSlug = "unique_article_id",
+                TopHighlight = "Hello!"
             };
         }
 
@@ -169,7 +205,47 @@ namespace Medium.Client.Test.HttpClients
                 topics = new List<string>() { "topic1", "topic2" },
                 url = "article_url",
                 voters = 7,
-                word_count = 350
+                word_count = 350,
+                is_locked = true,
+                is_series = false,
+                is_shortform = false,
+                unique_slug = "unique_article_id",
+                top_highlight = "Hello!"
+            });
+        }
+
+        private ArticleAssets MockArticleAssetsResponse()
+        {
+            return new ArticleAssets
+            {
+                ArticleId = "article-id",
+                Images = new[]{ "image_src.com" },
+                GithubGists = new[] { "github.url.com" },
+                YoutubeLinks = new[] { new YoutubeLink { Url = "test.com", Title = "TEST Title", Description = "TEST_Description"} },
+                GenericHyperlinks = new[] { new GenericHyperlink {Url = "url_test", Text = "link details" } },
+                OtherEmbeds = new Dictionary<string, IEnumerable<OtherEmbed>>
+                {
+                    { "mysite.com", new [] { new OtherEmbed{ Url = "embed_url.com", Title = "embed title"} } }
+                }
+            };
+        }
+
+        private HttpContent MockValidArticleAssetsResponse()
+        {
+            return JsonContent.Create(new
+            {
+                id = "article-id",
+                assets = new 
+                {
+                    images = new[] { "image_src.com" },
+                    github_gists = new[] { "github.url.com" },
+                    youtube = new[] { new { href = "test.com", title = "TEST Title", description = "TEST_Description" } },
+                    anchors = new[] { new { href = "url_test", text = "link details" } },
+                    other_embeds = new Dictionary<string, IEnumerable<object>>
+                    {
+                        { "mysite.com", new [] { new { href = "embed_url.com", title = "embed title"} } }
+                    }
+                }
             });
         }
 
@@ -218,6 +294,14 @@ namespace Medium.Client.Test.HttpClients
             return JsonContent.Create(new
             {
                 related_articles = new List<string>() { "related-post-id" }
+            });
+        }
+
+        private HttpContent MockValidRecommendedResponse()
+        {
+            return JsonContent.Create(new
+            {
+                recommended_articles = new List<string>() { "recommended-post-id" }
             });
         }
     }

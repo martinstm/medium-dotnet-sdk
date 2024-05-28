@@ -8,17 +8,17 @@ namespace Medium.Client
         public IArticleClient Articles { get; }
         public IPublicationClient Publications { get; }
         public IListClient Lists { get; }
-        public IMiscClient Miscellaneous { get; }
+        public IPlatformClient Platform { get; }
         public ISearchClient Search { get; }
 
         public MediumClient(IUserClient userClient, IArticleClient articles, IPublicationClient publications,
-                            IListClient listClient, IMiscClient miscClient, ISearchClient searchClient)
+                            IListClient listClient, IPlatformClient platformClient, ISearchClient searchClient)
         {
             Users = userClient;
             Articles = articles;
             Publications = publications;
             Lists = listClient;
-            Miscellaneous = miscClient;
+            Platform = platformClient;
             Search = searchClient;
         }
     }

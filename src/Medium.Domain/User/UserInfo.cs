@@ -46,5 +46,23 @@ namespace Medium.Domain.User
 
         [JsonProperty("image_url")]
         public string ImageUrl { get; set; }
+
+        [JsonProperty("bg_image_url")]
+        public string BackgroundImageUrl { get; set; }
+
+        [JsonProperty("logo_image_url")]
+        public string LogoImageUrl { get; set; }
+
+        [JsonProperty("has_list")]
+        public bool HasList { get; set; }
+
+        [JsonProperty("is_book_author")]
+        public bool IsBookAuthor { get; set; }
+
+        [JsonProperty("tipping_link")]
+        public string TippingLink { get; set; }
+
+        [JsonProperty("publication_following_count")]
+        public int PublicationFollowingCount { get; set; }
     }
 }

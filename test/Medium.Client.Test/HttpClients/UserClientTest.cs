@@ -316,7 +316,10 @@ namespace Medium.Client.Test.HttpClients
                 TopWriterIn = new List<string> { "id-1", "id-2" },
                 IsWriterProgramEnrolled = false,
                 MemberCreationDate = new DateTime(2023, 5, 10),
-                TwitterUsername = "test-twitter"
+                TwitterUsername = "test-twitter",
+                IsBookAuthor = false,
+                HasList = true,
+                PublicationFollowingCount = 27
             };
         }
 
@@ -336,7 +339,10 @@ namespace Medium.Client.Test.HttpClients
                 top_writer_in = new List<string> { "id-1", "id-2" },
                 is_writer_program_enrolled = false,
                 medium_member_at = new DateTime(2023, 5, 10),
-                twitter_username = "test-twitter"
+                twitter_username = "test-twitter",
+                is_book_author = false,
+                has_list = true,
+                publication_following_count = 27
             });
         }
 
@@ -386,8 +392,12 @@ namespace Medium.Client.Test.HttpClients
         {
             return JsonContent.Create(new
             {
-                user_id = "test-id",
-                publications = new List<string> { "my-publication-1", "my-publication-2" }
+                id = "test-id",
+                publications = new
+                { 
+                    admin_in = new List<string> { "my-publication-1", "my-publication-2" },
+                    writer_in = new List<string> { "publication-1", "publication-2" }
+                }
             });
         }
 
@@ -464,9 +474,14 @@ namespace Medium.Client.Test.HttpClients
             return new UserPublications
             {
                 UserId = "test-id",
-                Publications = new List<string> { "my-publication-1", "my-publication-2" }
+                Publications = new Publications
+                {
+                    AdminIn = new List<string> { "my-publication-1", "my-publication-2" },
+                    WriteIn = new List<string> { "publication-1", "publication-2" }
+                }
             };
         }
+        
         private List<string> MockUserIdsResponse()
         {
             return new List<string>

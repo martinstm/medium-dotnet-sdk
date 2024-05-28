@@ -6,11 +6,21 @@ namespace Medium.Domain.User
 {
     public sealed class UserPublications
     {
-        [JsonProperty("user_id")]
+        [JsonProperty("id")]
         public string UserId { get; set; }
 
-        [JsonConverter(typeof(EmptyObjectToEmptyListConverter<string>))]
         [JsonProperty("publications")]
-        public IEnumerable<string> Publications { get; set; }
+        public Publications Publications { get; set; }
+    }
+
+    public sealed class Publications
+    {
+        [JsonConverter(typeof(EmptyObjectToEmptyListConverter<string>))]
+        [JsonProperty("admin_in")]
+        public IEnumerable<string> AdminIn { get; set; }
+        
+        [JsonConverter(typeof(EmptyObjectToEmptyListConverter<string>))]
+        [JsonProperty("writer_in")]
+        public IEnumerable<string> WriteIn { get; set; }
     }
 }

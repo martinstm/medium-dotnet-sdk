@@ -56,5 +56,18 @@ namespace Medium.Client.HttpClients
             var result = await _baseHttpClient.GetAsync<IEnumerable<string>>($"{_basePath}/{articleId}/related", "related_articles");
             return result;
         }
+
+        public async Task<ArticleAssets> GetAssetsAsync(string articleId)
+        {
+            var result = await _baseHttpClient.GetAsync<ArticleAssets>($"{_basePath}/{articleId}/assets", "assets");
+            result.ArticleId = articleId;
+            return result;
+        }
+
+        public async Task<IEnumerable<string>> GetRecommendedAsync(string articleId)
+        {
+            var result = await _baseHttpClient.GetAsync<IEnumerable<string>>($"{_basePath}/{articleId}/recommended", "recommended_articles");
+            return result;
+        }
     }
 }
