@@ -58,5 +58,19 @@ namespace Medium.Client.Abstractions
         /// <param name="articleId"></param>
         /// <returns></returns>
         Task<IEnumerable<string>> GetRelatedAsync(string articleId);
+
+        /// <summary>
+        /// Gets a list of URLs for the assets present in the article.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        Task<ArticleAssets> GetAssetsAsync(string articleId);
+
+        /// <summary>
+        /// Gets a list of 10 articles as recommended by the Medium, for the given article.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<string>> GetRecommendedAsync(string articleId);
     }
 }

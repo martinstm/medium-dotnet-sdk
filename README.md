@@ -7,14 +7,6 @@
 
 This SDK was developed based on [Unofficial Medium API](https://mediumapi.com/). 
 
-### Presentation Video
-
-[![Watch the video](https://img.youtube.com/vi/gBCho5itKDI/hqdefault.jpg)](https://www.youtube.com/embed/gBCho5itKDI)
-
-### Demonstration Video
-
-[![Watch the video](https://img.youtube.com/vi/jAWJFdFEqVQ/hqdefault.jpg)](https://www.youtube.com/embed/jAWJFdFEqVQ)
-
 ## Installation
 
 Install the package from NuGet.org [Medium.Client](https://www.nuget.org/packages/Medium.Client/).
@@ -123,7 +115,6 @@ services.AddMediumClient()
 ## Roadmap :airplane:
 
 - Add in memory mock client implementation to simplify the development. With this, we can try the SDK without having Rapid API access.
-- .NET 8 upgrade
 
 
 ## Give me a star if you like it :star:

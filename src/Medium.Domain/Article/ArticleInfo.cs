@@ -59,5 +59,29 @@ namespace Medium.Domain.Article
 
         [JsonProperty("subtitle")]
         public string Subtitle { get; set; }
+
+        /// <summary>
+        /// Easily identify articles with a unique identifier.
+        /// </summary>
+        [JsonProperty("unique_slug")]
+        public string UniqueSlug { get; set; }
+
+        /// <summary>
+        /// Article under 150 words.
+        /// </summary>
+        [JsonProperty("is_shortform")]
+        public bool IsShortForm { get; set; }
+
+        /// <summary>
+        /// Most highlighted sentence in the Article.
+        /// </summary>
+        [JsonProperty("top_highlight")]
+        public string TopHighlight { get; set; }
+
+        [JsonProperty("is_locked")]
+        public bool IsLocked { get; set; }
+
+        [JsonProperty("is_series")]
+        public bool IsSeries { get; set; }
     }
 }

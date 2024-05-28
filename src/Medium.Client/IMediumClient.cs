@@ -11,7 +11,7 @@ namespace Medium.Client
         IArticleClient Articles { get; }
         IPublicationClient Publications { get; }
         IListClient Lists { get; }
-        IMiscClient Miscellaneous { get; }
+        IPlatformClient Platform { get; }
         ISearchClient Search { get; }
     }
 }

@@ -55,7 +55,7 @@ namespace Medium.Client.DependencyResolver
             services.AddScoped<IArticleClient, ArticleClient>();
             services.AddScoped<IPublicationClient, PublicationClient>();
             services.AddScoped<IListClient, ListClient>();
-            services.AddScoped<IMiscClient, MiscClient>();
+            services.AddScoped<IPlatformClient, PlatformClient>();
             services.AddScoped<ISearchClient, SearchClient>();
 
             return services;
